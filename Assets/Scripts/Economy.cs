@@ -8,7 +8,7 @@ public class Economy : MonoBehaviour
 
     public TextMeshProUGUI coinsText;
 
-    public static int playerCoins = 0;
+    public static int playerCoins = 2;
     
     // Start is called before the first frame update
     void Start()

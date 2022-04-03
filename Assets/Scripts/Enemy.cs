@@ -2,16 +2,26 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
     //health, speed, coin worth
-    public int health = 3;
+
+
+
+    public int maxHealth = 3;
+    public int currentHealth;
     public float speed = 3f;
     public int enemyCoins = 3;
 
+    public HealthBar healthBar;
+    
+
+
     private Transform target;
-    private int targetWaypointIndex = 1;
+    private int targetWaypointIndex = 0;
 
     
 
@@ -19,6 +29,10 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        currentHealth = maxHealth;
+        healthBar.SetMaxhealth(maxHealth);
+        
         // start position
          transform.position = Waypoints.waypoints[0].position;
         
@@ -60,7 +74,7 @@ public class Enemy : MonoBehaviour
             TargetNextWaypoint();
         }
         
-        Debug.Log(dotProduct);
+        // Debug.Log(dotProduct);
         
 
     }
@@ -98,9 +112,11 @@ public class Enemy : MonoBehaviour
     //Health
     public void TakeDamage(int hitAmount)
     {
-        health -= hitAmount;
+        currentHealth -= hitAmount;
         
-        if (health <= 0)
+        healthBar.SetHealth(currentHealth);
+        
+        if (currentHealth <= 0)
         {
             Economy.playerCoins += enemyCoins;
             Destroy(this.gameObject);
