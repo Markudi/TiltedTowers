@@ -36,6 +36,7 @@ public class SpawnTowers : MonoBehaviour
         if (Economy.playerCoins < towerCost)
         {
             Debug.Log("You do not have enough money!");
+            return;
         }
 
         //If player has more than 0 coins spawn tower.
@@ -56,6 +57,7 @@ public class SpawnTowers : MonoBehaviour
                 else
                 {
                     Debug.Log("You cannot build in this location!");
+                    return;
                 }
 
             }

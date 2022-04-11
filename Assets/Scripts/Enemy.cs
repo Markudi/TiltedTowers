@@ -7,16 +7,19 @@ using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
+    
+    
+    
     //health, speed, coin worth
-
-
-
     public int maxHealth = 3;
     public int currentHealth;
     public float speed = 3f;
     public int enemyCoins = 3;
 
     public HealthBar healthBar;
+
+
+    public GameObject deathEffect;
     
 
 
@@ -99,13 +102,20 @@ public class Enemy : MonoBehaviour
 
         if (targetWaypointIndex >= Waypoints.waypoints.Length - 1)
         {
-            Destroy(gameObject);
+            DecreasePlayerLives();
             return;
         }
         
         targetWaypointIndex++;
         target = Waypoints.waypoints[targetWaypointIndex];
         transform.LookAt(target);
+    }
+
+
+    private void DecreasePlayerLives()
+    {
+        Economy.playerLives--;
+        Destroy(gameObject);
     }
     
     
@@ -119,7 +129,14 @@ public class Enemy : MonoBehaviour
         if (currentHealth <= 0)
         {
             Economy.playerCoins += enemyCoins;
+            
+            //Death partial system
+            Instantiate(deathEffect, transform.position, transform.rotation);
+            
             Destroy(this.gameObject);
+            
+            
+            
         }
     }
 }
